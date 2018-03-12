@@ -6,6 +6,8 @@ Extracts and cleanses flat data exported from a Chemical Analyzer instrument (Ti
 ### Command Line Interface (CLI) Example
 ![GUI](https://github.com/kitestring/SciData/blob/master/SampleOutputs/GUI_Example.png)
 
+### To maintain confidentiality the data examples shown below are not “real” and are simulated data sets.
+
 ### Spectral Quality Output Example
 ![Data Set #1 Example](https://github.com/kitestring/SciData/blob/master/SampleOutputs/OFN_SpectralQuality.png)
 
