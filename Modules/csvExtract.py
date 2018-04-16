@@ -159,6 +159,9 @@ class Extract():
 		tableName_series = df.apply(self.get_table_name, axis=1)
 		df['TableName'] = tableName_series
 		
+		# Replace all nans in the dataframe
+		df = df.fillna(0)
+		
 		return self.correctColumnNames(df)
 			
 		

@@ -37,7 +37,8 @@ class Controls():
 			'sv': [self.SaveDictionaries, "Saves the following dictionaries:\n\t\t\t-factTableColumns\n\t\t\t-analyteTableColumns\n\t\t\t-analyteNameDict\n\t\t\t-chromatographyDict"],
 			'add': [self.AddAnalyte, "Add's an analyte to the database"],
 			'vd': [self.ViewJSONDataFile, "View Python dictionaries."],
-			'gc': [self.AddGCMethod, "Add's a GC method to the database."]
+			'gc': [self.AddGCMethod, "Add's a GC method to the database."],
+			'aas': [self.AddSynonymToAnalyteDict, "Add a synonym to an existing analyte in the analyte dictionary."]
 			}
 		self.runProgram = True
 		# if this is being run on my computer then run locally else use the S: drive
@@ -61,6 +62,19 @@ class Controls():
 	
 	def loadDicts(self):
 		self.factTableColumns, self.analyteTableColumns, self.analyteNameDict, self.chromatographyDict = self.JSON_Tools.Parce_Data(self.JSON_Tools.Load_Data(self.dict_file_path))
+	
+	def AddSynonymToAnalyteDict(self):
+		self.giveUserFeedback('Careful I was laszy on this one, and there is few checks.\nBe sure you are sure!!!')
+		existing_analyte = self.getRawUserInput('Which Analyte do you wish to add synonym to?')
+		new_synonym = self.getRawUserInput('Input additional synonym.')
+		message = "Existing Analyte to add synonym: {ex}\nNew Analyte Synonym: {ns}".format(ex=existing_analyte,ns=new_synonym)
+		self.giveUserFeedback(message)
+		response = self.getRawUserInput('Type "y" to accept')
+		if response.lower() == 'y':
+			self.analyteNameDict[new_synonym] = existing_analyte
+			self.giveUserFeedback('Changes Accepted')
+		else:
+			self.giveUserFeedback('Action Aborted')
 	
 	def ViewJSONDataFile(self):
 		Loaded_JSON_Data = self.JSON_Tools.Load_Data(self.dict_file_path)
