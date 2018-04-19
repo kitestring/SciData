@@ -7,6 +7,7 @@ import pandas as pd
 import time
 from jsonAPI import JSON_Tools
 import socket
+from excelmacros import Macros
 
 class Controls():
 	
@@ -38,7 +39,8 @@ class Controls():
 			'add': [self.AddAnalyte, "Add's an analyte to the database"],
 			'vd': [self.ViewJSONDataFile, "View Python dictionaries."],
 			'gc': [self.AddGCMethod, "Add's a GC method to the database."],
-			'aas': [self.AddSynonymToAnalyteDict, "Add a synonym to an existing analyte in the analyte dictionary."]
+			'aas': [self.AddSynonymToAnalyteDict, "Add a synonym to an existing analyte in the analyte dictionary."],
+			'pt': [self.MakePrettyTables, "Converts the average similarity csv files to a single excel file with pretty tables."]
 			}
 		self.runProgram = True
 		# if this is being run on my computer then run locally else use the S: drive
@@ -62,6 +64,16 @@ class Controls():
 	
 	def loadDicts(self):
 		self.factTableColumns, self.analyteTableColumns, self.analyteNameDict, self.chromatographyDict = self.JSON_Tools.Parce_Data(self.JSON_Tools.Load_Data(self.dict_file_path))
+	
+	def MakePrettyTables(self):
+		filenames = os.listdir(self.csvDirectory)
+		# Remove files that are not csv's and not a SummaryTable csv
+		filenames[:] = [os.path.join(self.csvDirectory, f) for f in filenames if '.csv' in f and not 'SummaryTable' in f]
+		csvFilesStr = ','.join(filenames)
+		ExcelVBAMacros = Macros()
+		self.giveUserFeedback('Building Pretty Tables Workbook\nPlease Wait a Moment...')
+		ExcelVBAMacros.BuildPrettyTableWorkbook(csvFilesStr)
+		self.giveUserFeedback('Done Building Pretty Tables Workbook')
 	
 	def AddSynonymToAnalyteDict(self):
 		self.giveUserFeedback('Careful I was laszy on this one, and there is few checks.\nBe sure you are sure!!!')
