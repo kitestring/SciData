@@ -66,13 +66,15 @@ class Controls():
 		self.factTableColumns, self.analyteTableColumns, self.analyteNameDict, self.chromatographyDict = self.JSON_Tools.Parce_Data(self.JSON_Tools.Load_Data(self.dict_file_path))
 	
 	def MakePrettyTables(self):
+		# Create a string with all spectral similarity csv files that are comma separated
 		filenames = os.listdir(self.csvDirectory)
-		# Remove files that are not csv's and not a SummaryTable csv
 		filenames[:] = [os.path.join(self.csvDirectory, f) for f in filenames if '.csv' in f and not 'SummaryTable' in f]
 		csvFilesStr = ','.join(filenames)
-		ExcelVBAMacros = Macros('C:\\SciData\\Modules\\TableVisualizer.xlsm', 'VBA_Macros')
+		
+		# Run pretty tables vba macro on spectral similarity csv files
+		ExcelVBAMacros = Macros(os.path.join('C:\\SciData\\Modules', "TableVisualizer.xlsm"), 'VBA_Macros')
 		self.giveUserFeedback('Building Pretty Tables Workbook\nPlease Wait a Moment...')
-		ExcelVBAMacros.BuildPrettyTableWorkbook(csvFilesStr)
+		ExcelVBAMacros.BuildPrettyTableWorkbook(csvFilesStr, os.path.join(self.csvDirectory, "PrettyTables.xlsx"))
 		self.giveUserFeedback('Done Building Pretty Tables Workbook')
 	
 	def AddSynonymToAnalyteDict(self):
