@@ -1,19 +1,16 @@
 Attribute VB_Name = "VBA_Macros"
-Sub ConvertCSVToPrettyTables(ByVal csvFileString As String)
+Sub ConvertCSVToPrettyTables(ByVal csvFileString As String, ByVal PrettyTablesWkBkFilePath As String)
 
 Application.ScreenUpdating = False
 
 Dim FinalWkbk As Workbook
 Dim csvWkBk As Workbook
 
-' Dim csvFileString As String
 Dim csvFiles As Variant
 Dim csvNo As Integer
 
 Dim row As Integer
 Dim BottomRow As Integer
-
-    ' csvFileString = "C:\SciData\BT4D_Market_Mix_Results\OPP\PV2_1D\Chloropyriphos_methyl.csv,C:\SciData\BT4D_Market_Mix_Results\OPP\PV2_1D\Chlorpyriphos.csv,C:\SciData\BT4D_Market_Mix_Results\OPP\PV2_1D\Phosmet.csv"
 
     ' Create new workbook which will be the final
         Workbooks.Add
@@ -94,7 +91,7 @@ Dim BottomRow As Integer
 
     Next csvFile
     
-    FinalWkbk.Close True, Filename:="c:\Users\Ken_Kite\Desktop\PrettyTables.xlsx"
+    FinalWkbk.Close True, Filename:=PrettyTablesWkBkFilePath
 End Sub
 
 Private Sub FormatHeaders()
