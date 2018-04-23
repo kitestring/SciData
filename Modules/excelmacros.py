@@ -2,9 +2,10 @@ import win32com.client
 
 class Macros():
 
-	def __init__(self):
-		self.ExcelMarcoFilePath = 'C:\\SciData\\Modules\\TableVisualizer.xlsm'
-		self.Macro_Prefix = "TableVisualizer.xlsm!VBA_Macros."
+	def __init__(self, ExcelFilePath, VBAModule):
+		self.ExcelMarcoFilePath = ExcelFilePath
+		excel_file = ExcelFilePath.split('\\')[-1]
+		self.Macro_Prefix = excel_file + "!" + VBAModule + "."
 		self.xl = win32com.client.Dispatch("Excel.Application")
 		self.xl.Visible = False
 	
