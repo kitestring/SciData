@@ -66,7 +66,7 @@ class Controls():
 		self.factTableColumns, self.analyteTableColumns, self.analyteNameDict, self.chromatographyDict = self.JSON_Tools.Parce_Data(self.JSON_Tools.Load_Data(self.dict_file_path))
 	
 	def MakePrettyTables(self):
-		# Create a string with all spectral similarity csv files that are comma separated
+		# Create a string of all the file paths of the spectral similarity csv files in the working directory in a comma separated format
 		filenames = os.listdir(self.csvDirectory)
 		filenames[:] = [os.path.join(self.csvDirectory, f) for f in filenames if '.csv' in f and not 'SummaryTable' in f]
 		csvFilesStr = ','.join(filenames)
